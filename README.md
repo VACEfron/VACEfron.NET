@@ -1,5 +1,5 @@
 # VACEfron.NET
- 🥤 An API wrapper for VAC Efron's web API
+ 🥤 An API wrapper for VAC Efron's web API.
 
 ## Introduction
 Below you can find examples using this wrapper combined with [Discord.NET](https://github.com/discord-net/Discord.Net) in a command context.
