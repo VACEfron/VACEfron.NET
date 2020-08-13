@@ -79,12 +79,13 @@ namespace VACEfron.NET
             return RequestFunctions.ImageRequest($"rankcard" +
                 $"?username={rankCard.Username.Replace("#", "%23")}" +
                 $"&avatar={rankCard.AvatarUrl}" +
-                $"&custombg={rankCard.CustomBackground ?? string.Empty}" +
+                $"&custombg={rankCard.CustomBackgroundUrl ?? string.Empty}" +
                 $"&level={rankCard.Level}" +
+                $"&rank={rankCard.Rank}" +
                 $"&currentxp={rankCard.CurrentXp}" +
                 $"&nextlevelxp={rankCard.NextLevelXp}" +
                 $"&previouslevelxp={rankCard.PreviousLevelXp}" +
-                $"&xpcolor={rankCard.XpColor?.Replace("#", string.Empty) ?? string.Empty}" +
+                $"&xpcolor={rankCard.XpColorHex?.Replace("#", string.Empty) ?? string.Empty}" +
                 $"&isboosting={rankCard.IsBoosting}");
         }
 
