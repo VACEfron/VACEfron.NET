@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Net;
-using System.Text;
 
 namespace VACEfron.NET
 {
@@ -54,12 +53,6 @@ namespace VACEfron.NET
             string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
             return (JObject)JsonConvert.DeserializeObject(responseString);
-        }
-
-        public static JObject ByteArrayToJson(byte[] byteArray)
-        {
-            string jsonStr = Encoding.UTF8.GetString(byteArray);
-            return (JObject)JsonConvert.DeserializeObject(jsonStr);
         }
     }
 }
