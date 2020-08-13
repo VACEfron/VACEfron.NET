@@ -2,6 +2,8 @@
  🥤 An API wrapper for VAC Efron's web API.
 
 ## Introduction
+Install the NuGet package [here](https://www.nuget.org/packages/VACEfron.NET/1.0.0).
+
 Below you can find examples using this wrapper combined with [Discord.NET](https://github.com/discord-net/Discord.Net) in a command context.
 
 You can also visit the [wrapper]() or [API]() documentation (coming soon).
