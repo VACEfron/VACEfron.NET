@@ -44,3 +44,6 @@ var stream = VACEfronEndpoint.RankCard(rankCard);
 
 await Context.Channel.SendFileAsync(stream, "image.png");
 ```
+
+## Support
+Please join the [Discord server](https://discord.gg/xJ2HRxZ) for any questions or issues.
