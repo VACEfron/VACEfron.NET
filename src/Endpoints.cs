@@ -24,6 +24,14 @@ namespace VACEfron.NET
         }
 
         /// <summary>
+        /// Returns a MemoryStream for a distracted boyfriend meme.
+        /// </summary>
+        public static MemoryStream DistractedBoyfriend(string boyfriendAvatarURL, string womanAvatarURL, string girlfriendAvatarURL)
+        {
+            return RequestFunctions.ImageRequest($"distractedbf?boyfriend={boyfriendAvatarURL}&woman={womanAvatarURL}&girlfriend={girlfriendAvatarURL}");
+        }
+
+        /// <summary>
         /// Returns a MemoryStream for a first time meme.
         /// </summary>
         public static MemoryStream FirstTime(string avatarUrl)
