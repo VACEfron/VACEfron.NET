@@ -2,7 +2,7 @@
  🥤 An API wrapper for VAC Efron's web API.
 
 ## Introduction
-Install the NuGet package [here](https://www.nuget.org/packages/VACEfron.NET/1.0.1).
+Install the NuGet package [here](https://www.nuget.org/packages/VACEfron.NET).
 
 Below you can find examples using this wrapper combined with [Discord.NET](https://github.com/discord-net/Discord.Net) in a command context.
 
@@ -44,3 +44,6 @@ var stream = VACEfronEndpoint.RankCard(rankCard);
 
 await Context.Channel.SendFileAsync(stream, "image.png");
 ```
+
+## Support
+Please join the [Discord server](https://discord.gg/xJ2HRxZ) for any questions or issues.
