@@ -34,17 +34,17 @@ namespace VACEfron.NET
             {
                 using var httpClient = new HttpClient();
                 var stream = httpClient.GetStreamAsync($"https://vacefron.nl/api/{endpoint}");
-        
+                stream.Wait();
                 return (MemoryStream) stream.Result;
             }
-            catch(HttpRequestException exception)
+            catch(AggregateException exception)
             {
-                if (exception.InnerException is WebException webException)
+                if (exception.InnerException.InnerException /* Inner inner exception should be WebException */ is WebException webException)
                 {
                     using var reader = new StreamReader(webException.Response.GetResponseStream());
                     var error = (JObject)JsonConvert.DeserializeObject(reader.ReadToEnd());
                     throw new Exception($"Status {error["code"].Value<int>()}: {error["message"].Value<string>()}");
-                } else throw new Exception("Error ocurred while trying to get MemoryStream.", exception);
+                } else throw new Exception("Error ocurred while trying to get MemoryStream.", exception.InnerException);
             }
         }
 
@@ -52,7 +52,7 @@ namespace VACEfron.NET
         {
             var request = new HttpClient();
             var stream = request.GetStreamAsync($"https://vacefron.nl/api/{endpoint}");
-            
+            stream.Wait();
             var responseString = new StreamReader(stream.Result).ReadToEnd();
 
             return (JObject)JsonConvert.DeserializeObject(responseString);
