@@ -32,27 +32,32 @@ namespace VACEfron.NET
         {
             try
             {
-                using WebClient webClient = new WebClient();
-                byte[] byteArray = webClient.DownloadData($"https://vacefron.nl/api/{endpoint}");
-
-                return new MemoryStream(byteArray);
+                using var httpClient = new HttpClient();
+                var stream = httpClient.GetStreamAsync($"https://vacefron.nl/api/{endpoint}");
+        
+                return (MemoryStream) stream.Result;
             }
-            catch(WebException exception)
-            {                
-                using var reader = new StreamReader(exception.Response.GetResponseStream());
-                JObject error = (JObject)JsonConvert.DeserializeObject(reader.ReadToEnd());
-
-                throw new Exception($"Status {error["code"].Value<int>()}: {error["message"].Value<string>()}");
+            catch(HttpRequestException exception)
+            {
+                if (exception.InnerException is WebException webException)
+                {
+                    using var reader = new StreamReader(webException.Response.GetResponseStream());
+                    var error = (JObject)JsonConvert.DeserializeObject(reader.ReadToEnd());
+                    throw new Exception($"Status {error["code"].Value<int>()}: {error["message"].Value<string>()}");
+                } else throw new Exception("Error ocurred while trying to get MemoryStream.", exception);
             }
         }
 
-        public static JObject MakeWebRequest(string endpoint)
+		public static JObject MakeWebRequest(string endpoint)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"https://vacefron.nl/api/{endpoint}");
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            var request = new HttpClient();
+            var stream = request.GetStreamAsync($"https://vacefron.nl/api/{endpoint}");
+            
+            var responseString = new StreamReader(stream.Result).ReadToEnd();
 
             return (JObject)JsonConvert.DeserializeObject(responseString);
         }
+
+        
     }
 }
