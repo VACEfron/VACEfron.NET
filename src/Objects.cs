@@ -1,4 +1,4 @@
-﻿namespace VACEfron.NET
+﻿namespace VACEFron.NET
 {
     public class RankCard
     {

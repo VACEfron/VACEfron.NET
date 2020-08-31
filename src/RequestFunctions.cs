@@ -1,13 +1,15 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Net;
+using System.Linq;
+using System.Net.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace VACEfron.NET
 {
     public static class RequestFunctions
-    {        
+    {
         public static string JsonRequest(string endpoint, string jsonObject)
         {
             try
@@ -16,7 +18,10 @@ namespace VACEfron.NET
 
                 return data[jsonObject].Value<string>();
             }
-            catch { throw; }            
+            catch
+            {
+                throw;
+            }
         }
 
         public static JObject JObjectRequest(string endpoint)
@@ -25,34 +30,35 @@ namespace VACEfron.NET
             {
                 return MakeWebRequest(endpoint);
             }
-            catch { throw; }
+            catch
+            {
+                throw;
+            }
         }
 
         public static MemoryStream ImageRequest(string endpoint)
         {
-            try
+            using var httpClient = new HttpClient();
+            var thht = httpClient.GetAsync("https://vacefron.nl/api/" + endpoint, HttpCompletionOption.ResponseContentRead);
+            var responseMessage = thht.Result;
+            if (!responseMessage.IsSuccessStatusCode)
             {
-                using WebClient webClient = new WebClient();
-                byte[] byteArray = webClient.DownloadData($"https://vacefron.nl/api/{endpoint}");
-
-                return new MemoryStream(byteArray);
-            }
-            catch(WebException exception)
-            {                
-                using var reader = new StreamReader(exception.Response.GetResponseStream());
-                JObject error = (JObject)JsonConvert.DeserializeObject(reader.ReadToEnd());
-
+                var @string = responseMessage.Content.ReadAsStringAsync().Result;
+                var error = (JObject) JsonConvert.DeserializeObject(@string);
                 throw new Exception($"Status {error["code"].Value<int>()}: {error["message"].Value<string>()}");
             }
+
+            var stream = responseMessage.Content.ReadAsStreamAsync();
+            return (MemoryStream) stream.Result;
         }
 
         public static JObject MakeWebRequest(string endpoint)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"https://vacefron.nl/api/{endpoint}");
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-            return (JObject)JsonConvert.DeserializeObject(responseString);
+            var request = new HttpClient();
+            var httpResponseMsg = request.GetAsync($"https://vacefron.nl/api/{endpoint}");
+            return (JObject) JsonConvert.DeserializeObject(httpResponseMsg.Result.Content.ReadAsStringAsync().Result);
         }
+
+       
     }
 }
