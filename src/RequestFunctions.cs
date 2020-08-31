@@ -1,13 +1,15 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Net;
+using System.Linq;
+using System.Net.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace VACEfron.NET
 {
     public static class RequestFunctions
-    {        
+    {
         public static string JsonRequest(string endpoint, string jsonObject)
         {
             try
@@ -16,7 +18,10 @@ namespace VACEfron.NET
 
                 return data[jsonObject].Value<string>();
             }
-            catch { throw; }            
+            catch
+            {
+                throw;
+            }
         }
 
         public static JObject JObjectRequest(string endpoint)
@@ -25,39 +30,36 @@ namespace VACEfron.NET
             {
                 return MakeWebRequest(endpoint);
             }
-            catch { throw; }
+            catch
+            {
+                throw;
+            }
         }
 
         public static MemoryStream ImageRequest(string endpoint)
         {
-            try
+            using var httpClient = new HttpClient();
+            var thht = httpClient.GetAsync("https://vacefron.nl/api/" + endpoint, HttpCompletionOption.ResponseContentRead);
+            var responseMessage = thht.Result;
+            if (!responseMessage.IsSuccessStatusCode)
             {
-                using var httpClient = new HttpClient();
-                var stream = httpClient.GetStreamAsync($"https://vacefron.nl/api/{endpoint}");
-                stream.Wait();
-                return (MemoryStream) stream.Result;
+                var @string = responseMessage.Content.ReadAsStringAsync().Result;
+                var error = (JObject) JsonConvert.DeserializeObject(@string);
+                throw new Exception($"Status {error["code"].Value<int>()}: {error["message"].Value<string>()}");
             }
-            catch(AggregateException exception)
-            {
-                if (exception.InnerException.InnerException /* Inner inner exception should be WebException */ is WebException webException)
-                {
-                    using var reader = new StreamReader(webException.Response.GetResponseStream());
-                    var error = (JObject)JsonConvert.DeserializeObject(reader.ReadToEnd());
-                    throw new Exception($"Status {error["code"].Value<int>()}: {error["message"].Value<string>()}");
-                } else throw new Exception("Error ocurred while trying to get MemoryStream.", exception.InnerException);
-            }
+
+            var stream = responseMessage.Content.ReadAsStreamAsync();
+            return (MemoryStream) stream.Result;
         }
 
-		public static JObject MakeWebRequest(string endpoint)
+        public static JObject MakeWebRequest(string endpoint)
         {
             var request = new HttpClient();
-            var stream = request.GetStreamAsync($"https://vacefron.nl/api/{endpoint}");
-            stream.Wait();
-            var responseString = new StreamReader(stream.Result).ReadToEnd();
-
-            return (JObject)JsonConvert.DeserializeObject(responseString);
+            var httpResponseMsg = request.GetAsync($"https://vacefron.nl/api/{endpoint}");
+            var responseString = new StreamReader(httpResponseMsg.Result.Content.ReadAsStreamAsync().Result).ReadToEnd();
+            return (JObject) JsonConvert.DeserializeObject(responseString);
         }
 
-        
+       
     }
 }

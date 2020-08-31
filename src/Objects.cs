@@ -1,4 +1,4 @@
-﻿namespace VACEfron.NET
+﻿namespace RedBot.folder
 {
     public class RankCard
     {
