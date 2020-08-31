@@ -56,8 +56,7 @@ namespace VACEfron.NET
         {
             var request = new HttpClient();
             var httpResponseMsg = request.GetAsync($"https://vacefron.nl/api/{endpoint}");
-            var responseString = new StreamReader(httpResponseMsg.Result.Content.ReadAsStreamAsync().Result).ReadToEnd();
-            return (JObject) JsonConvert.DeserializeObject(responseString);
+            return (JObject) JsonConvert.DeserializeObject(httpResponseMsg.Result.Content.ReadAsStringAsync().Result);
         }
 
        
