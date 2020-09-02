@@ -39,12 +39,12 @@ namespace VACEfron.NET
         public static MemoryStream ImageRequest(string endpoint)
         {
             using var httpClient = new HttpClient();
-            var thht = httpClient.GetAsync("https://vacefron.nl/api/" + endpoint, HttpCompletionOption.ResponseContentRead);
-            var responseMessage = thht.Result;
+            var getRequest = httpClient.GetAsync("https://vacefron.nl/api/" + endpoint, HttpCompletionOption.ResponseContentRead);
+            var responseMessage = getRequest.Result;
             if (!responseMessage.IsSuccessStatusCode)
             {
-                var @string = responseMessage.Content.ReadAsStringAsync().Result;
-                var error = (JObject) JsonConvert.DeserializeObject(@string);
+                var responseString = responseMessage.Content.ReadAsStringAsync().Result;
+                var error = (JObject) JsonConvert.DeserializeObject(responseString);
                 throw new Exception($"Status {error["code"].Value<int>()}: {error["message"].Value<string>()}");
             }
 
