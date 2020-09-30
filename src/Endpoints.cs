@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace VACEfron.NET
 {
@@ -29,6 +30,31 @@ namespace VACEfron.NET
         public static MemoryStream DistractedBoyfriend(string boyfriendAvatarURL, string womanAvatarURL, string girlfriendAvatarURL)
         {
             return RequestFunctions.ImageRequest($"distractedbf?boyfriend={boyfriendAvatarURL}&woman={womanAvatarURL}&girlfriend={girlfriendAvatarURL}");
+        }
+
+        /// <summary>
+        /// Returns a MemoryStream for an Among Us ejected meme.
+        /// </summary>
+        public static MemoryStream Ejected(string name, bool wasImposter, EjectColor crewmateColor = EjectColor.Random)
+        {
+            string color;
+            if (crewmateColor == EjectColor.Random)
+            {
+                Array values = Enum.GetValues(typeof(EjectColor));
+                color = values.GetValue(new Random().Next(values.Length - 1)).ToString().ToLower();
+            }
+            else
+                color = crewmateColor.ToString().ToLower();
+
+            return RequestFunctions.ImageRequest($"ejected?name={name}&imposter={wasImposter}&crewmate={color}");
+        }
+
+        /// <summary>
+        /// Returns a MemoryStream for an Among Us emergency meeting meme.
+        /// </summary>
+        public static MemoryStream EmergencyMeeting(string text)
+        {
+            return RequestFunctions.ImageRequest($"emergencymeeting?text={text}");
         }
 
         /// <summary>

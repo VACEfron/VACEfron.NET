@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -49,7 +47,7 @@ namespace VACEfron.NET
             }
 
             var stream = responseMessage.Content.ReadAsStreamAsync();
-            return (MemoryStream) stream.Result;
+            return (MemoryStream)stream.Result;
         }
 
         public static JObject MakeWebRequest(string endpoint)
@@ -58,7 +56,5 @@ namespace VACEfron.NET
             var httpResponseMsg = request.GetAsync($"https://vacefron.nl/api/{endpoint}");
             return (JObject) JsonConvert.DeserializeObject(httpResponseMsg.Result.Content.ReadAsStringAsync().Result);
         }
-
-       
     }
 }

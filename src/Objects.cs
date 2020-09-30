@@ -13,4 +13,21 @@
         public string XpColorHex { get; set; }
         public bool IsBoosting { get; set; }
     }
+
+    public enum EjectColor
+    {
+        Black,
+        Blue,
+        Brown,
+        Cyan,
+        Darkgreen,
+        Lime,
+        Orange,
+        Pink,
+        Purple,
+        Red,
+        White,
+        Yellow,
+        Random
+    }
 }
