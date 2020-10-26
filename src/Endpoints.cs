@@ -126,9 +126,9 @@ namespace VACEfron.NET
         /// <summary>
         /// Returns a MemoryStream for a stonks meme.
         /// </summary>
-        public static MemoryStream Stonks(string avatarUrl)
+        public static MemoryStream Stonks(string avatarUrl, bool notStonks = false)
         {
-            return RequestFunctions.ImageRequest($"stonks?user={avatarUrl}");
+            return RequestFunctions.ImageRequest($"stonks?user={avatarUrl}&notstonks={notStonks}");
         }
 
         /// <summary>
