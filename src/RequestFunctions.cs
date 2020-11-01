@@ -52,9 +52,9 @@ namespace VACEfron.NET
 
         public static JObject MakeWebRequest(string endpoint)
         {
-            var request = new HttpClient();
-            var httpResponseMsg = request.GetAsync($"https://vacefron.nl/api/{endpoint}");
-            return (JObject) JsonConvert.DeserializeObject(httpResponseMsg.Result.Content.ReadAsStringAsync().Result);
+            var httpClient = new HttpClient();
+            var responseMessage = httpClient.GetAsync($"https://vacefron.nl/api/{endpoint}");
+            return (JObject)JsonConvert.DeserializeObject(responseMessage.Result.Content.ReadAsStringAsync().Result);
         }
     }
 }
