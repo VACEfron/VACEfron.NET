@@ -8,13 +8,13 @@ namespace VACEfron.NET
 {
     public static class RequestFunctions
     {
-        public static string JsonRequest(string endpoint, string jsonObject)
+        public static string JsonRequest(string endpoint, string key)
         {
             try
             {
                 JObject data = MakeWebRequest(endpoint);
 
-                return data[jsonObject].Value<string>();
+                return data[key].Value<string>();
             }
             catch
             {
