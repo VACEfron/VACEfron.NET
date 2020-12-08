@@ -9,6 +9,14 @@ namespace VACEfron.NET
     public static class VACEfronEndpoint
     {
         /// <summary>
+        /// Returns a MemoryStream for a batman slap meme.
+        /// </summary>
+        public static MemoryStream BatmanSlap(string text1, string text2, string batmanAvatarUrl = null, string robinAvatarUrl = null)
+        {
+            return RequestFunctions.ImageRequest($"batmanslap?text1={text1}&text2={text2}{(batmanAvatarUrl != null ? $"&batman={batmanAvatarUrl}" : string.Empty)}{(robinAvatarUrl != null ? $"&robin={robinAvatarUrl}" : string.Empty)}");
+        }
+
+        /// <summary>
         /// Returns a MemoryStream for a car reverse meme.
         /// </summary>
         public static MemoryStream CarReverse(string text)
@@ -113,13 +121,13 @@ namespace VACEfron.NET
             return RequestFunctions.ImageRequest($"rankcard" +
                 $"?username={rankCard.Username.Replace("#", "%23")}" +
                 $"&avatar={rankCard.AvatarUrl}" +
-                $"&custombg={rankCard.CustomBackgroundUrl ?? string.Empty}" +
+                $"{(rankCard.CustomBackgroundUrl != null ? $"&custombg={rankCard.CustomBackgroundUrl}" : string.Empty)}" +
                 $"&level={rankCard.Level}" +
                 $"&rank={rankCard.Rank}" +
                 $"&currentxp={rankCard.CurrentXp}" +
                 $"&nextlevelxp={rankCard.NextLevelXp}" +
                 $"&previouslevelxp={rankCard.PreviousLevelXp}" +
-                $"&xpcolor={rankCard.XpColorHex?.Replace("#", string.Empty) ?? string.Empty}" +
+                $"{(rankCard.XpColorHex != null ? $"&xpcolor={rankCard.XpColorHex.Replace("#", string.Empty)}" : string.Empty)}" +
                 $"&isboosting={rankCard.IsBoosting}");
         }
 
@@ -153,6 +161,14 @@ namespace VACEfron.NET
         public static MemoryStream Wide(string imageUrl)
         {
             return RequestFunctions.ImageRequest($"wide?image={imageUrl}");
+        }
+
+        /// <summary>
+        /// Returns a MemoryStream for a wolverine meme.
+        /// </summary>
+        public static MemoryStream Wolverine(string avatarUrl)
+        {
+            return RequestFunctions.ImageRequest($"wolverine?user={avatarUrl}");
         }
     }
 }
