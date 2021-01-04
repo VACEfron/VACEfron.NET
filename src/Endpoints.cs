@@ -41,6 +41,14 @@ namespace VACEfron.NET
         }
 
         /// <summary>
+        /// Returns a MemoryStream for a dock of shame meme.
+        /// </summary>
+        public static MemoryStream DockOfShame(string avatarUrl)
+        {
+            return RequestFunctions.ImageRequest($"dockofshame?user={avatarUrl}");
+        }
+
+        /// <summary>
         /// Returns a MemoryStream for an Among Us ejected meme.
         /// </summary>
         public static MemoryStream Ejected(string name, bool wasImposter, EjectColor crewmateColor = EjectColor.Random)
@@ -169,6 +177,14 @@ namespace VACEfron.NET
         public static MemoryStream Wolverine(string avatarUrl)
         {
             return RequestFunctions.ImageRequest($"wolverine?user={avatarUrl}");
+        }
+
+        /// <summary>
+        /// Returns a MemoryStream for a woman yelling at cat meme.
+        /// </summary>
+        public static MemoryStream WomanYellingAtCat(string womanAvatarUrl, string catAvatarUrl)
+        {
+            return RequestFunctions.ImageRequest($"womanyellingatcat?woman={womanAvatarUrl}&cat={catAvatarUrl}");
         }
     }
 }
