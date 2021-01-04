@@ -6,9 +6,9 @@ using Newtonsoft.Json.Linq;
 
 namespace VACEfron.NET
 {
-    public static class RequestFunctions
+    internal static class RequestFunctions
     {
-        public static string JsonRequest(string endpoint, string key)
+        internal static string JsonRequest(string endpoint, string key)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace VACEfron.NET
             }
         }
 
-        public static JObject JObjectRequest(string endpoint)
+        internal static JObject JObjectRequest(string endpoint)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace VACEfron.NET
             }
         }
 
-        public static MemoryStream ImageRequest(string endpoint)
+        internal static MemoryStream ImageRequest(string endpoint)
         {
             using var httpClient = new HttpClient();
             var getRequest = httpClient.GetAsync("https://vacefron.nl/api/" + endpoint, HttpCompletionOption.ResponseContentRead);
@@ -50,7 +50,7 @@ namespace VACEfron.NET
             return (MemoryStream)stream.Result;
         }
 
-        public static JObject MakeWebRequest(string endpoint)
+        internal static JObject MakeWebRequest(string endpoint)
         {
             var httpClient = new HttpClient();
             var responseMessage = httpClient.GetAsync($"https://vacefron.nl/api/{endpoint}");
