@@ -30,14 +30,15 @@ var rankCard = new RankCard()
 {
     Username = "VAC Efron#0001",
     AvatarUrl = Context.User.GetAvatarUrl(),
+    CircleAvatar = true, // Optional circle avatar.
     Level = 5,
     Rank = 1,
     CurrentXp = 1878,
     PreviousLevelXp = 1500,
     NextLevelXp = 2160,
-    CustomBackgroundUrl = null, // Optional custom background
-    IsBoosting = false,
-    XpColorHex = null // Use default progress bar color (#fcba41)
+    CustomBackgroundUrl = null, // Optional custom background.
+    IsBoosting = false, // Optional server boost icon next to username.
+    XpColorHex = null // Optional progress bar color. Defaults to #fcba41.
 };
 
 var stream = VACEfronEndpoint.RankCard(rankCard);
