@@ -11,7 +11,8 @@
         public int NextLevelXp { get; set; }
         public int PreviousLevelXp { get; set; }
         public string XpColorHex { get; set; }
-        public bool IsBoosting { get; set; }
+        public bool? IsBoosting { get; set; }
+        public bool? CircleAvatar { get; set; }
     }
 
     public enum EjectColor
