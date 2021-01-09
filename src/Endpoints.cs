@@ -49,6 +49,14 @@ namespace VACEfron.NET
         }
 
         /// <summary>
+        /// Returns a MemoryStream for a Goku drip meme.
+        /// </summary>
+        public static MemoryStream Drip(string avatarUrl)
+        {
+            return RequestFunctions.ImageRequest($"drip?user={avatarUrl}");
+        }
+
+        /// <summary>
         /// Returns a MemoryStream for an Among Us ejected meme.
         /// </summary>
         public static MemoryStream Ejected(string name, bool wasImposter, EjectColor crewmateColor = EjectColor.Random)
