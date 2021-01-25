@@ -138,11 +138,11 @@ namespace VACEfron.NET
                 $"?username={rankCard.Username.Replace("#", "%23")}" +
                 $"&avatar={rankCard.AvatarUrl}" +
                 $"{(!string.IsNullOrEmpty(rankCard.CustomBackgroundUrl) ? $"&custombg={rankCard.CustomBackgroundUrl}" : string.Empty)}" +
-                $"&level={rankCard.Level}" +
-                $"&rank={rankCard.Rank}" +
                 $"&currentxp={rankCard.CurrentXp}" +
                 $"&nextlevelxp={rankCard.NextLevelXp}" +
                 $"&previouslevelxp={rankCard.PreviousLevelXp}" +
+                $"{(rankCard.Level != null ? $"&level={rankCard.Level}" : string.Empty)}" +
+                $"{(rankCard.Rank != null ? $"&rank={rankCard.Rank}" : string.Empty)}" +
                 $"{(!string.IsNullOrEmpty(rankCard.XpColorHex) ? $"&xpcolor={rankCard.XpColorHex.Replace("#", string.Empty)}" : string.Empty)}" +
                 $"{(rankCard.IsBoosting != null ? $"&isboosting={rankCard.IsBoosting}" : string.Empty)}" +
                 $"{(rankCard.CircleAvatar != null ? $"&circleavatar={rankCard.CircleAvatar}" : string.Empty)}");
