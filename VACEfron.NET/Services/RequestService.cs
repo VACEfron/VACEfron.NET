@@ -11,7 +11,7 @@ internal class RequestService
     internal async Task<Stream> GetStreamAsync(string endpoint, Dictionary<string, string?> parameters)
     {
         var response = await _httpClient.GetAsync(endpoint + GenerateQueryParameters(parameters)).ConfigureAwait(false);
-        Console.WriteLine(endpoint + GenerateQueryParameters(parameters));
+        
         if (response.IsSuccessStatusCode) 
             return await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
         

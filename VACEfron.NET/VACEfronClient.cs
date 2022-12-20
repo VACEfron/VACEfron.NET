@@ -74,7 +74,7 @@ public class VACEfronClient
             {"textShadowColor", textShadowColorHex},
             {"xpColor", xpColorHex},
             {"circleAvatar", circleAvatar?.ToString()},
-            {"badges", badges?.Any() is true ? string.Join("|", badges.Select(x => x.ToString().ToLower())) : null}
+            {"badges", badges?.Any() is true ? string.Join("|", badges) : null}
         }).ConfigureAwait(false);
     }
 
