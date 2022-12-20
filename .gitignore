@@ -1,10 +1,4 @@
-.vs/
+.idea
 
-*.user
-*.sln
-*.xml
-*.csproj
-
-Properties/
-obj/
 bin/
+obj/

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>2.0.0</Version>
+    <Title>VACEfron.NET</Title>
+    <Authors>VAC Efron</Authors>
+    <Description>An asyncronous API wrapper for the VAC Efron API.</Description>
+    <PackageProjectUrl>https://vacefron.nl/api</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/VACEfron/VACEfron.NET</RepositoryUrl>
+    <PackageTags>api, wrapper, vacefron, vac efron</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+</Project>
